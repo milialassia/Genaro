@@ -345,7 +345,7 @@
     <span class="move-tag">3.</span>
     <div class="move-body">
       <h3><span class="piece-icon">♝</span>Lugar</h3>
-      <p><!-- EDITAR: dirección del salón/casa -->Completar dirección acá</p>
+      <p><!-- EDITAR: dirección del salón/casa -->"CAPITAN SALTO"; Facundo Zuviría 5641 </p>
     </div>
   </div>
 
@@ -445,7 +445,7 @@ document.getElementById('rsvpForm').addEventListener('submit', function(e){
   const nombre = document.getElementById('nombre').value.trim();
   const asistencia = document.getElementById('asistencia').value;
 
-  const texto = `¡Hola! Soy ${nombre}. ${asistencia} al cumple de ajedrez de Genaro.`;
+  const texto = `♟¡Hola! Soy ${nombre}. ${asistencia} al cumple de ajedrez de Genaro ♝.`;
 
   const url = `https://wa.me/${CONFIG.telefonoWhatsapp}?text=${encodeURIComponent(texto)}`;
   spawnConfetti();
