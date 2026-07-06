@@ -296,6 +296,34 @@
     font-family:var(--font-mono);
   }
 
+/* ===== PIEZAS FLOTANTES ===== */
+
+.chess-bg{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+}
+
+.chess-bg span{
+    position:absolute;
+    font-size:26px;
+    opacity:.08;
+    user-select:none;
+}
+
+@keyframes float{
+    0%{
+        transform:translate(-150px,100vh) rotate(0deg);
+    }
+
+    100%{
+        transform:translate(calc(100vw + 150px),-150px) rotate(720deg);
+    }
+}
+
+  
   @media (prefers-reduced-motion: reduce){
     .knight-rider, .sq.show .piece, .pawn{animation:none !important;}
   }
@@ -303,6 +331,8 @@
 </head>
 <body>
 
+<div class="chess-bg" id="chessBg"></div>
+  
 <section class="hero">
   <div class="board" id="board" aria-hidden="true"></div>
 
@@ -353,7 +383,7 @@
 
 <section class="rsvp" id="rsvp">
   <div class="inner">
-    <p class="eyebrow" style="text-align:center;">3. Bb5+</p>
+    <p class="eyebrow" style="text-align:center;"></p>
     <h2>Confirmá tu jugada</h2>
     <p class="lead">Necesitamos saber quiénes se suman a la partida antes del jaque mate.</p>
 
@@ -469,6 +499,53 @@ function spawnConfetti(){
   }
   setTimeout(()=> layer.remove(), 4000);
 }
+
+/* ===========================
+   PIEZAS DE AJEDREZ FLOTANDO
+=========================== */
+
+const bg = document.getElementById("chessBg");
+
+const piezas = [
+    "♔","♕","♖","♗","♘","♙",
+    "♚","♛","♜","♝","♞","♟"
+];
+
+for(let i=0;i<25;i++){
+
+    const p = document.createElement("span");
+
+    p.textContent = piezas[Math.floor(Math.random()*piezas.length)];
+
+    p.style.position = "absolute";
+    p.style.fontSize = (18 + Math.random()*30) + "px";
+    p.style.opacity = 0.05 + Math.random()*0.08;
+
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight;
+
+    let dx = (Math.random()*1.2 + 0.3) * (Math.random()>0.5 ? 1 : -1);
+    let dy = (Math.random()*1.2 + 0.3) * (Math.random()>0.5 ? 1 : -1);
+
+    bg.appendChild(p);
+
+    function mover(){
+
+        x += dx;
+        y += dy;
+
+        if(x < -40 || x > window.innerWidth + 40) dx *= -1;
+        if(y < -40 || y > window.innerHeight + 40) dy *= -1;
+
+        p.style.transform =
+            `translate(${x}px,${y}px) rotate(${(x+y)/8}deg)`;
+
+        requestAnimationFrame(mover);
+    }
+
+    mover();
+}
+  
 </script>
 </body>
 </html>
